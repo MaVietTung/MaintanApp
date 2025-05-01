@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bảo trì hệ thống</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #1a1a1a;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 0.5em;
+    }
+
+    p {
+      font-size: 1.5em;
+      margin-bottom: 1em;
+    }
+
+    #countdown {
+      font-size: 2em;
+      font-weight: bold;
+      color: #00ffcc;
+    }
+
+    .spinner {
+      margin-top: 30px;
+      border: 8px solid #333;
+      border-top: 8px solid #00ffcc;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔧 Website đang bảo trì</h1>
+  <p>Chúng tôi sẽ quay lại sau:</p>
+  <div id="countdown">Đang tải...</div>
+  <div class="spinner"></div>
+
+  <script>
+    // Đặt thời gian kết thúc bảo trì (1 giờ sau thời điểm hiện tại)
+    const maintenanceEnd = new Date().getTime() + 60 * 60 * 1000;
+
+    const countdownElement = document.getElementById("countdown");
+
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const distance = maintenanceEnd - now;
+
+      if (distance <= 0) {
+        countdownElement.innerHTML = "Chúng tôi đã quay lại!";
+        document.querySelector(".spinner").style.display = "none";
+        return;
+      }
+
+      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((distance / (1000 * 60)) % 60);
+      const seconds = Math.floor((distance / 1000) % 60);
+
+      countdownElement.innerHTML = `${hours} giờ ${minutes} phút ${seconds} giây`;
+    };
+
+    // Cập nhật mỗi giây
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+
+</body>
+</html>
